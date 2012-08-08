@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<tool id="parse_primersearch_1" name="Parse Primer search">
+  <description>Parse EMBOSS primer search output to tabular </description>
+  <command interpreter="perl">parse_primersearch.pl $inputPrimersearchFile $outputfile </command>
+  <inputs>
+    <param format="primersearch" name="inputPrimersearchFile" type="data" label="Primersearch  output file"/>
+  </inputs>
+  <outputs>
+
+     <data format="tabular" name="outputfile" />
+  </outputs>
+<help>
+
+.. class:: infomark
+
+**TIP**
+
+This tool parses EMBOSS primersearch_ output into columnar format suitable for use as interval 
+
+
+
+Columns are:
+
+1. Primer set ID
+2. Hit ID
+3. Number of mismatches
+4. Amplimer start
+5. Amplimer end
+6. Amplicon length
+
+
+----
+
+**Example**
+
+*output*
+
+::
+
+ ACP032  isotig07062     0       214     363     149
+ ACP223  isotig04647     0       362     574     212
+ ACP224  isotig04647     0       303     519     216
+ ACP225  isotig04647     0       153     355     202
+ ACP363  isotig10393     0       93      193     100
+ ACP394  isotig00271     0       894     986     92
+ ACP394  isotig00273     0       805     897     92
+ ACP440  isotig05277     0       506     601     95
+ ACP615  isotig00271     0       894     978     84
+ ACP615  isotig00273     0       805     889     84
+ AJK295  isotig06005     0       182     651     469
+
+
+.. _primersearch: http://emboss.sourceforge.net/apps/release/5.0/emboss/apps/primersearch.html
+
+-----------------------
+
+*If you use this tool please cite:*
+
+A Toolkit For Bulk PCR-Based Marker Design From Next-Generation Sequence Data: 
+Application For  Development Of A Framework Linkage Map In Bulb Onion (*Allium cepa* L.)
+(2012)
+
+Samantha Baldwin, Roopashree Revanna, Susan Thomson, Meeghan Pither-Joyce, Kathryn Wright, 
+Ross Crowhurst, Mark Fiers, Leshi Chen, Richard MacKnight, John A. McCallum
+
+
+</help>
+</tool>

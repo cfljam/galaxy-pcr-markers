@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<tool id="uni_Mask_1" name="Unique">
+  <description>Return unique lines</description>
+  <command >cat $inputFile | sort | uniq >  $outputfile</command>
+  <inputs>
+    <param format="txt" name="inputFile" type="data" label="Input  File" help="Any text or tabular file" />
+  </inputs>
+  <outputs>
+     <data format="txt"  name="outputfile" />
+  </outputs>
+
+</tool>

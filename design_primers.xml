@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<tool id="Genetic_Marker_Design_2" name="Design primers to features">
+  <description>Design PCR Primers to Features</description>
+  <command interpreter="python">design_primers.py $inputfastaFile $inputSNPfile $inputTargetfile $min_size $max_size >  $primer_outputfile  </command>
+  <inputs>
+    <param format="fasta" name="inputfastaFile" type="data" label="Multifasta Source file" />
+    <param format="gff3" name="inputSNPfile" type="data" label="annotation file(Gff3)" />
+    <param format="txt" name="inputTargetfile" type="data" optional="false" label="Target file" help="IN FORMAT Sequence id:source:type:start e.g. 1174806:gsMapper:SNP:292" ></param>
+<param name="min_size" size="20" type="text" value="75" label="Minimum Product Size Range" />
+     <param name="max_size" size="20" type="text" value="100" label="Maximum Product Size Range" />
+  </inputs>
+  <outputs>
+     <data format="tabular"  name="primer_outputfile" />
+  </outputs>
+<help>
+.. class:: infomark
+
+**TIP**
+
+This tool designs primer pairs to flank features
+
+It takes 
+
+* an input reference sequence file
+* a gff3 file containing feature information
+* a single column file containing list of features  
+
+----
+
+**Example**
+
+--input GFF
+
+::
+
+ PGSC0003DMB000000001    samtools        SNP     6345    6346    4.84    .       .       ID=PGSC0003DMB000000001:SAMTOOLS:SNP:6345;Variant_seq=C;Reference_seq=T;Total_reads=2
+ PGSC0003DMB000000001    samtools        SNP     6453    6454    18      .       .       ID=PGSC0003DMB000000001:SAMTOOLS:SNP:6453;Variant_seq=T;Reference_seq=G;Total_reads=8
+ PGSC0003DMB000000001    samtools        SNP     7255    7256    149     .       .       ID=PGSC0003DMB000000001:SAMTOOLS:SNP:7255;Variant_seq=G;Reference_seq=T;Total_reads=14
+ PGSC0003DMB000000001    samtools        SNP     7371    7372    86.8    .       .       ID=PGSC0003DMB000000001:SAMTOOLS:SNP:7371;Variant_seq=C;Reference_seq=T;Total_reads=9
+ PGSC0003DMB000000001    samtools        SNP     8288    8289    10.7    .       .       ID=PGSC0003DMB000000001:SAMTOOLS:SNP:8288;Variant_seq=A;Reference_seq=G;Total_reads=5
+
+
+--input features
+
+::
+
+	PGSC0003DMB000000001:SAMTOOLS:SNP:1012901
+	PGSC0003DMB000000001:SAMTOOLS:SNP:1021771
+	PGSC0003DMB000000001:SAMTOOLS:SNP:1025761
+	PGSC0003DMB000000001:SAMTOOLS:SNP:1026717
+	PGSC0003DMB000000001:SAMTOOLS:SNP:1026834
+	PGSC0003DMB000000001:SAMTOOLS:SNP:1029542
+
+
+--output columnar data
+
+::
+
+ PGSC0003DMB000000001:SAMTOOLS:SNP:1012901 AGAGGTCGGCTCTCTAGTAGCA GGGGATCCACTAACTATGTCACTT 86
+ PGSC0003DMB000000001:SAMTOOLS:SNP:1021771 CCTATGCGAGAAAGGGACAC GCCCTTCCATGTTGTACGAG 100
+ PGSC0003DMB000000001:SAMTOOLS:SNP:1025761 TGTGAGTAACTTAGTGTCCTACGTCAA CACTCAATGAGCCAAAGCAA 92
+ PGSC0003DMB000000001:SAMTOOLS:SNP:1026717 TTCCTAAGTCATGGGAAAGCA AGTTCATCCAAGGCAAGCAT 76
+ PGSC0003DMB000000001:SAMTOOLS:SNP:1026834 AATGAAGTGACTGGGGAGGA TGCTGGTCGAAGCTTTCTTT 98
+ PGSC0003DMB000000001:SAMTOOLS:SNP:1029542 TAACCAGAAAGTCCGGATGG TTCTGAAGTCAAGTGGGGAGA 75
+
+-----------------------
+
+*If you use this tool please cite:*
+
+A Toolkit For Bulk PCR-Based Marker Design From Next-Generation Sequence Data: 
+Application For  Development Of A Framework Linkage Map In Bulb Onion (*Allium cepa* L.)
+(2012)
+
+Samantha Baldwin, Roopashree Revanna, Susan Thomson, Meeghan Pither-Joyce, Kathryn Wright, 
+Ross Crowhurst, Mark Fiers, Leshi Chen, Richard MacKnight, John A. McCallum
+
+</help>
+
+</tool>

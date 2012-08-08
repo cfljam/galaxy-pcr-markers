@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<tool id="patman_1" name="search for patterns in DNA using PatMaN">
+  <description>search for approximate patterns in DNA libraries</description>
+  <command>patman  -a -e $edits -g $gaps -D $inputfastaFile -P $inputPatfile | sort | uniq > $patman_outputfile  </command>
+  <inputs>
+  <param  name="edits" type="integer" label="max N mismatches and or gaps" value="0" size="1" />
+  <param name="gaps" type="integer" label="max N gaps" value="0" size="1"/>
+    <param format="fasta" name="inputfastaFile" type="data" label="Multifasta target file" />
+    <param format="fasta" name="inputPatfile" type="data" label="Pattern fasta" />
+
+  </inputs>
+  <outputs>
+     <data format="tabular"  name="patman_outputfile" />
+  </outputs>
+<help>
+
+
+
+This is a Galaxy wrapper for PatMaN: a DNA pattern matcher for short sequences
+
+* Website https://bioinf.eva.mpg.de/patman/
+* PubMed Citation_ 
+
+*Inputs*
+
+* Patterns in fasta format (create from tabular using tabular-to-fasta tool)
+* Multifasta file of target sequences
+
+*Output*
+
+* 6 Column tabular interval data
+* Columns Chrom, Pattern Name, Start, End, strand, N mismatches
+
+:: 
+
+ isotig05934	ACP818	368	389	+	0
+ isotig05934	ACP859	377	396	+	0
+ isotig06765	ACP822	448	468	+	0
+ isotig07088	ACP825	49	75	+	0
+ isotig07652	ACP830	199	218	+	0
+ isotig07652	ACP831	257	276	+	0
+ isotig10333	ACP837	474	497	+	0
+ isotig10393	ACP838	10	34	+	0
+ 
+
+
+.. _Citation: http://www.ncbi.nlm.nih.gov/pubmed/18467344?dopt=Abstract
+
+
+</help>
+</tool>

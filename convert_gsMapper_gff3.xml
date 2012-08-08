@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<tool id="gsMapper_to_gff3_1" name="Convert gsMapper to gff3">
+  <description>Convert Roche gsMapper to GFF3</description>
+  <command interpreter="bash">gsmapper2gff.sh  $inputGsFile  $outputfile</command>
+  <inputs>
+    <param format="txt" name="inputGsFile" type="data" label="Roche gsMapper 454HCDiffs.txt or 454AllDiffs.txt file"/>
+
+  </inputs>
+  <outputs>
+     <data format="gff3" name="outputfile" />
+  </outputs>
+<help>
+.. class:: infomark
+
+**TIP**
+
+This tool parses Roche gsMapper read mapping output into GVF/GFF3 format
+
+
+----
+
+**Example**
+
+*input*
+
+::
+
+ >Reference      Start   End     Ref     Var     Total   Var     Ref     Var     Coding  Region  Known   # Fwd   # Rev   # Fwd   # Rev
+ >Accno           Pos    Pos     Nuc     Nuc     Depth   Freq    AA      AA      Frame   Name    SNP's   w/ var  w/ var  Total   Total
+ ______________________________
+
+ >1118212        673     673     A       C       7       100%                                            6       1       6       1
+ 
+ Reads with Difference:
+ 1118212                     648+ GTTGGTCCACTATTACTCTCAGATT-ATTTCATAACAATAATGG----A-TAC-AA 696
+                                                           **
+ FX289JP01DVQR7               53- GTTGGTCCACTATTACTCTCAGATTC-TTTCATAACAATAATGGGCTGA-TACTA  1
+ FX289JP02IJT2O  (7)          82+ GTTGGTCCACTATTACTCTCAGATTC-TTTCATAACAATAATGG----A-TAC-AA 130
+ FX289JP01B8R7V               84+ GTTGGTCCACTATTACTCTCAGATTC-TTTCATAACAATA-TGG----A-TAC-AA 131
+ FX289JP02FX58L               68+ GTTGGTCCACTATTACTCTCAGATTC-TTTCATAACAATAATGG----AC-AC-AA 116
+ FX289JP02JXAX7  (7)          67+ GTTGGTCCACTATTACTCTCAGATTC-TTTCATAACAATAATGG----A-TAC-AA 115
+ FX289JP02JOOQZ  (2)          69+ GTTGGTCCACTATTACTCTCAGATTC-TTTCATAACAATAATGG----A-TAC-AA 117
+ FX289JP02GPHPX               45+ GTTGGTCCACTATTACTCTCAGATTC-TTTCATAACAATAATGG----A-TAC-AA 93
+                                                          **
+
+
+*output*
+
+::
+
+ ##gff-version 3
+ 1118212 gsMapper SNP 673 673 . . . ID=1118212:gsMapper:SNP:673;Reference_seq=A;Variant_seq=C;Total_reads=7;Variant_freq=100;
+ 1118212 gsMapper SNP 730 730 . . . ID=1118212:gsMapper:SNP:730;Reference_seq=A;Variant_seq=G;Total_reads=13;Variant_freq=31;
+ 1118212 gsMapper SNP 782 782 . . . ID=1118212:gsMapper:SNP:782;Reference_seq=T;Variant_seq=C;Total_reads=13;Variant_freq=92;
+ 1118212 gsMapper SNP 1319 1319 . . . ID=1118212:gsMapper:SNP:1319;Reference_seq=G;Variant_seq=A;Total_reads=7;Variant_freq=100;
+
+-----------------------
+
+*If you use this tool please cite:*
+
+A Toolkit For Bulk PCR-Based Marker Design From Next-Generation Sequence Data: 
+Application For  Development Of A Framework Linkage Map In Bulb Onion (*Allium cepa* L.)
+(2012)
+
+Samantha Baldwin, Roopashree Revanna, Susan Thomson, Meeghan Pither-Joyce, Kathryn Wright, 
+Ross Crowhurst, Mark Fiers, Leshi Chen, Richard MacKnight, John A. McCallum
+
+ 
+</help>
+</tool>
