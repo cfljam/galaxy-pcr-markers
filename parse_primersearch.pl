@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 #parse_primersearch.pl
 #reformat EMBOSS primersearch output into columnar Galaxy interval format 
-
+#usage  perl parse_primersearch.pl <input primersearch file> <tabular output file>
 #Copyright 2012 John McCallum 
 #New Zealand Institute for Plant and Food Research
 #This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 open (IN, "<$ARGV[0]");
 open (OUT, ">$ARGV[1]");
 
-#print OUT  "primerset_id","\t","sequence_id","\t","hit_start","\","mismatches","\t","amplimer_size",\n";
+
 
 
 
