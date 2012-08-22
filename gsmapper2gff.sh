@@ -15,6 +15,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+##usage gsmapper2gff.sh <input 454HCDiffs.txt or 454AllDiffs.txt file>  <output gff3 file>
+
 
 infile=$1
 outfile=$2

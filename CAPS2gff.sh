@@ -1,5 +1,7 @@
 #!/bin/sh
 ##convert output of CAPS detection tool to GFF3
+## usage 
+# sh CAPS2gff.sh <input tabular CAPS output> <output file>
 #Copyright 2012 John McCallum
 #New Zealand Institute for Plant and Food Research
 
