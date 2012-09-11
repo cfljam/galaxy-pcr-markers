@@ -11,6 +11,7 @@
   </outputs>
 <help>
 This tool provides a simple conversion from vcf to gvf.
+
 It is intended for use with mpileup output where -g or -u flags are NOT used.
 
 Be sure to read the documentation to determine if it meets your requirements.
