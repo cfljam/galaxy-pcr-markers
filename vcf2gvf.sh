@@ -1,6 +1,7 @@
 #!/bin/sh
 ##convert vcf to gvf
 ##NOTE This is a very simple basic parser for a complex format.
+#It is intended for use with mpileup output where -g or -u flags are NOT used.
 
 ##usage vcf2gvf.sh <vcf file> <outputfile>
 
