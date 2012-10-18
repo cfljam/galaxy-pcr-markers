@@ -120,7 +120,7 @@ attributes = {}
 Get relevant info from vcf file and put to proper gff columns
 """
 
-out_gff_file.write("#gff-version 3")
+out_gff_file.write("#gff-version 3\n")
 for line in in_vcf_file:
     if line.startswith("#") == False:
         info = line.split()
