@@ -2,6 +2,8 @@
 ##design primers to features in multiple sequences
 ##usage: python  design_primers.py <fasta-file> <gff file> <file of target IDs> <prod_min_size> <prod_max_size>
 
+##CAUTION will only reliably work with  Primer3 version 1.1.4 or earlier ##
+
 
 #Copyright 2012 John McCallum & Leshi Chen
 #New Zealand Institute for Plant and Food Research
@@ -117,7 +119,7 @@ for myrec in SeqIO.parse(in_seq_handle, "fasta"):
                         primer_cl = Primer3Commandline()
                         #set the emboss tool to suppress  output as this will make Galaxy  think it is error message although it is a message to state run success
                         primer_cl.set_parameter("-auto",'1')
-                        #pass  sequence file to emboss
+                        ###pass  sequence file to emboss. FAILS for primer3_core V2 ##
                         primer_cl.set_parameter("-sequence",tempfastaFile)
                         #add target location
                         primer_cl.set_parameter("-target", p3_target)
