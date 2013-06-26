@@ -1,0 +1,155 @@
+#!/usr/bin/env python
+##design primers to features in multiple sequences
+##usage: python  design_primers.py <fasta-file> <gff file> <file of target IDs> <prod_min_size> <prod_max_size>
+
+
+#Copyright 2013 John McCallum & Susan Thomson
+#New Zealand Institute for Plant and Food Research
+#This program is free software: you can redistribute it and/or modify
+#     it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+import os
+import StringIO
+import re
+import copy
+import sys
+from BCBio import GFF
+from BCBio.GFF import GFFExaminer
+from Bio import SeqIO
+import run_p3 as P3
+import umelt_service as umelts
+import argparse	
+
+##Primer3 defaults or additional options defined as dictionary 
+def_dict={
+'PRIMER_MIN_SIZE':'18',
+'PRIMER_MAX_SIZE':'25',
+'PRIMER_MAX_NS_ACCEPTED':'1'}
+
+#in_file = sys.argv[1]
+#gff_file = sys.argv[2]
+#target_file =  sys.argv[3]
+#prod_min_size = int(sys.argv[4])
+#prod_max_size = int(sys.argv[5])
+
+#parse arguments
+parser = argparse.ArgumentParser(description='hrm params')
+parser.add_argument('-i', type=argparse.FileType('r'), help="input sequence file, required", dest='in_file', required=True)
+parser.add_argument('-g', type=argparse.FileType('r'), help="input gff file with SNP and indels, required", dest='gff_file', required=True)
+parser.add_argument('-T', type=argparse.FileType('r'), help="input target SNP file, required", dest='target_file', required=True)
+parser.add_argument('-u',help="do uMelt prediction, optional", dest='run_uMelt',action='store_true', default=False )
+parser.add_argument('-n', type=int, help="maximum number of primer pairs to return, default=5", dest='max_primers', default=5) ## PRIMER_NUM_RETURN
+parser.add_argument('-p', type=int, help="minimum product size", dest='prod_min_size', default=100)                             ## PRIMER_PRODUCT_SIZE_RANGE min
+parser.add_argument('-P', type=int, help="maximum product size", dest='prod_max_size', default=300)                            ## PRIMER_PRODUCT_SIZE_RANGE max
+parser.add_argument('-l', type=int, help="optimum primer length", dest='opt_primer_length', default=20)                        ## PRIMER_OPT_SIZE
+parser.add_argument('-m', type=int, help="maximum tm difference between primers", dest='max_tm_diff', default=1)               ## PRIMER_PAIR_MAX_DIFF_TM
+parser.add_argument('-t', type=int, help="optimum Tm for primers, recommend range 59 to 61", dest='optimum_tm', default=59)    ## PRIMER_OPT_TM
+parser.add_argument('-G', type=int, help="optimum GC percentage of primers", dest='opt_GC_percent', default=50)                ## PRIMER_OPT_GC_PERCENT
+parser.add_argument('-x', type=int, help="maximum polyx, recommend less than 4", dest='maxpolyx', default=3)                   ## PRIMER_MAX_POLY_X
+parser.add_argument('-c', type=int, help="number of C/Gs at end, recommend 2", dest='gc_clamp', default=1)                     ## PRIMER_GC_CLAMP
+my_args = parser.parse_args()  
+
+##update from args. NEEDS TO BE FINISHED
+productsizerange = str(my_args.prod_min_size) + "-" + str(my_args.prod_max_size)
+def_dict['PRIMER_PRODUCT_SIZE_RANGE']=productsizerange
+def_dict['PRIMER_NUM_RETURN']=str(my_args.max_primers)
+def_dict['PRIMER_OPT_SIZE']=str(my_args.opt_primer_length)
+def_dict['PRIMER_PAIR_MAX_DIFF_TM']=str(my_args.max_tm_diff)
+def_dict['PRIMER_OPT_TM']=str(my_args.optimum_tm)
+def_dict['PRIMER_OPT_GC_PERCENT']=str(my_args.opt_GC_percent)
+def_dict['PRIMER_MAX_POLY_X']=str(my_args.maxpolyx)
+def_dict['PRIMER_GC_CLAMP']=str(my_args.gc_clamp)
+
+
+#open input files
+#in_seq_handle = open(my_args.in_file)
+#in_gff_handle = open(my_args.gff_file)
+#in_target_handle=open(my_args.target_file)
+#read  target feature IDs into list
+targets=my_args.target_file.readlines()
+my_args.target_file.close()
+##and create a hit list of sequences from this
+target_seq_id_list = list(set([line.split(":")[0] for line in targets]))
+##create iterator returning sequence records
+for myrec in SeqIO.parse(my_args.in_file, "fasta"):
+    #check if this sequence is included in the target list
+    if myrec.id in target_seq_id_list:
+        ##create sequence dictionary so we can add in gff annotations
+        seq_dict = {myrec.id : myrec}
+        ##just limit to gff annotations for this sequence
+        limit_info = dict(gff_id = [ myrec.id ])
+        ##rewind gff filehandle
+        my_args.gff_file.seek(0)
+        ##read annotations into sequence dictionary for this sequence record only 
+        annotations = [r for r in GFF.parse(my_args.gff_file, base_dict=seq_dict,limit_info=limit_info)]
+        ##if there are any annotations, then  proceed. 
+        if annotations:
+            rec=annotations[0]
+            ##iterate over list of target IDs
+            for t in targets:
+                target_ID = t.strip('\n')
+                target_annotations = [f for f in rec.features if f.id == target_ID ]
+                if target_annotations:
+                    mytarget = target_annotations[0]
+                    #just consider slice of sequence in a window of +/- prod_max_size  bp
+                    ##from feature UNLESS feature is close to end
+                    ##Note that slice is zero-based
+                    featLocation = mytarget.location.start.position 
+                    if featLocation > my_args.prod_max_size:
+                        slice_start = featLocation -  my_args.prod_max_size
+                        featPosition =  my_args.prod_max_size  
+                    else:
+                        slice_start = 0
+                        featPosition = featLocation
+                    if (len(rec) - featLocation) <  my_args.prod_max_size:
+                        slice_end = len(rec)
+                    else:
+                        slice_end = featLocation +  my_args.prod_max_size
+                    ###grab slice of sequence fom this window.
+                    targetRec = rec[slice_start:slice_end]
+                    matching_feature = [f for f in targetRec.features if f.id == mytarget.id]
+                    if matching_feature:
+                        target_feat = matching_feature[0]
+                        my_target_dict={} # re-initialize target dictionary
+                        if target_feat.location.start.position == 0:
+                            target_feat.location.start.position = 1
+                        #get the mask features by removing  target...all features are masked as just using snp and indels, a smarter filter could be added 
+			exclude_feat = list(targetRec.features) ##list copy to avoid possible side-effects
+                        exclude_feat.remove(target_feat)
+			excludes_str=''
+                        for x in [str(x.location.start.position)+','+str(x.location.end.position -x.location.start.position) for x in exclude_feat]:
+				excludes_str +=x
+				excludes_str += ' '
+			my_target_dict={'SEQUENCE_ID' : rec.name, 'SEQUENCE_TEMPLATE': targetRec.seq.tostring(),'SEQUENCE_TARGET': str(target_feat.location.start.position) + ',1','SEQUENCE_INTERNAL_EXCLUDED_REGION': excludes_str}
+                        my_target_dict.update(def_dict) ##add in defaults
+			result=P3.run_P3(target_dict=my_target_dict)
+			amp_seq=targetRec.seq ##need to make this conditional on getting a result >0
+			mutamp_seq=targetRec.seq.tomutable()
+			mutamp_seq[target_feat.location.start]=target_feat.qualifiers['Variant_seq'][0] #mutate to variant
+			for primerset in result:
+				amp_start=int(primerset['PRIMER_LEFT'].split(',')[0])
+				amp_end=int(primerset['PRIMER_RIGHT'].split(',')[0])
+                                ref_melt_Tm=0
+                                var_melt_Tm=0
+                                if my_args.run_uMelt:
+                                    try:
+                                        ref_melt_Tm=umelts.getTm(umelts.getmelt(amp_seq.tostring()[amp_start:amp_end+1]))
+					var_melt_Tm=umelts.getTm(umelts.getmelt(mutamp_seq.tostring()[amp_start:amp_end+1]))
+                                    except:
+					ref_melt_Tm=0 ##preferably something more informative?
+					var_melt_Tm=0
+				print mytarget.id, amp_end-amp_start,target_feat.qualifiers['Reference_seq'][0], target_feat.qualifiers['Variant_seq'][0],primerset['PRIMER_LEFT_SEQUENCE'],primerset['PRIMER_RIGHT_SEQUENCE'], ref_melt_Tm,var_melt_Tm,abs(ref_melt_Tm-var_melt_Tm)#, amp_seq.tostring()[amp_start:amp_end+1], mutamp_seq.tostring()[amp_start:amp_end+1]
+
+my_args.gff_file.close()
+my_args.in_file.close()
+
