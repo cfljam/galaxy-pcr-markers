@@ -1,6 +1,11 @@
 #!/usr/bin/env python
-##design primers to features in multiple sequences
-##usage: python  design_primers.py <fasta-file> <gff file> <file of target IDs> <prod_min_size> <prod_max_size>
+##design primers to features in multiple sequences, with option to predict melting
+#usage: design_HRM_primers.py [-h] -i IN_FILE -g GFF_FILE -T TARGET_FILE [-u]
+#                             [-n MAX_PRIMERS] [-p PROD_MIN_SIZE]
+#                             [-P PROD_MAX_SIZE] [-l OPT_PRIMER_LENGTH]
+#                             [-m MAX_TM_DIFF] [-t OPTIMUM_TM]
+#                             [-G OPT_GC_PERCENT] [-x MAXPOLYX] [-c GC_CLAMP]
+
 
 
 #Copyright 2013 John McCallum & Susan Thomson
@@ -80,6 +85,9 @@ targets=my_args.target_file.readlines()
 my_args.target_file.close()
 ##and create a hit list of sequences from this
 target_seq_id_list = list(set([line.split(":")[0] for line in targets]))
+
+##print header
+print "SNP_Target_ID", "Position","Ref_base","Variant_base" ,"PRIMER_LEFT_SEQUENCE",'PRIMER_RIGHT_SEQUENCE', "ref_melt_Tm","var_melt_Tm","Tm_difference"
 ##create iterator returning sequence records
 for myrec in SeqIO.parse(my_args.in_file, "fasta"):
     #check if this sequence is included in the target list
