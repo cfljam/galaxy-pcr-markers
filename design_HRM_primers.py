@@ -36,6 +36,7 @@ import umelt_service as umelts
 import argparse	
 
 ##Primer3 defaults or additional options defined as dictionary 
+
 def_dict={
 'PRIMER_MIN_SIZE':'18',
 'PRIMER_MAX_SIZE':'25',
@@ -62,6 +63,9 @@ parser.add_argument('-t', type=int, help="optimum Tm for primers, recommend rang
 parser.add_argument('-G', type=int, help="optimum GC percentage of primers", dest='opt_GC_percent', default=50)                ## PRIMER_OPT_GC_PERCENT
 parser.add_argument('-x', type=int, help="maximum polyx, recommend less than 4", dest='maxpolyx', default=3)                   ## PRIMER_MAX_POLY_X
 parser.add_argument('-c', type=int, help="number of C/Gs at end, recommend 2", dest='gc_clamp', default=1)                     ## PRIMER_GC_CLAMP
+parser.add_argument('-d', type=str, help="variant indentifier delimiter, used to separate sequence ID from rest ", dest='target_delim', default=':')                      
+
+
 my_args = parser.parse_args()  
 
 ##update from args. NEEDS TO BE FINISHED
@@ -84,7 +88,7 @@ def_dict['PRIMER_GC_CLAMP']=str(my_args.gc_clamp)
 targets=my_args.target_file.readlines()
 my_args.target_file.close()
 ##and create a hit list of sequences from this
-target_seq_id_list = list(set([line.split(":")[0] for line in targets]))
+target_seq_id_list = [re.split(my_args.target_delim,X)[0] for X in targets] ## target_delimiter defaults to ':'  e.g. ABC:SNP:SAMTOOL:1234 
 
 ##print header
 print "SNP_Target_ID", "Position","Ref_base","Variant_base" ,"PRIMER_LEFT_SEQUENCE",'PRIMER_RIGHT_SEQUENCE', "ref_melt_Tm","var_melt_Tm","Tm_difference"
