@@ -36,20 +36,13 @@ import umelt_service as umelts
 import argparse	
 
 ##Primer3 defaults or additional options defined as dictionary 
-
 def_dict={
 'PRIMER_MIN_SIZE':'18',
 'PRIMER_MAX_SIZE':'25',
 'PRIMER_MAX_NS_ACCEPTED':'1'}
 
-#in_file = sys.argv[1]
-#gff_file = sys.argv[2]
-#target_file =  sys.argv[3]
-#prod_min_size = int(sys.argv[4])
-#prod_max_size = int(sys.argv[5])
-
 #parse arguments
-parser = argparse.ArgumentParser(description='hrm params')
+parser = argparse.ArgumentParser(description='Primer set design and melt prediction parameters')
 parser.add_argument('-i', type=argparse.FileType('r'), help="input sequence file, required", dest='in_file', required=True)
 parser.add_argument('-g', type=argparse.FileType('r'), help="input gff file with SNP and indels, required", dest='gff_file', required=True)
 parser.add_argument('-T', type=argparse.FileType('r'), help="input target SNP file, required", dest='target_file', required=True)
@@ -64,14 +57,12 @@ parser.add_argument('-G', type=int, help="optimum GC percentage of primers", des
 parser.add_argument('-x', type=int, help="maximum polyx, recommend less than 4", dest='maxpolyx', default=3)                   ## PRIMER_MAX_POLY_X
 parser.add_argument('-c', type=int, help="number of C/Gs at end, recommend 2", dest='gc_clamp', default=1)                     ## PRIMER_GC_CLAMP
 parser.add_argument('-d', type=str, help="variant indentifier delimiter, used to separate sequence ID from rest ", dest='target_delim', default=':')                      
-
-
 my_args = parser.parse_args()  
 
 ##update from args. NEEDS TO BE FINISHED
 productsizerange = str(my_args.prod_min_size) + "-" + str(my_args.prod_max_size)
 def_dict['PRIMER_PRODUCT_SIZE_RANGE']=productsizerange
-def_dict['PRIMER_NUM_RETURN']=str(my_args.max_primers)
+def_dict['PRIMER_NUM_RETURN']=str(my_args.max_primers +1)
 def_dict['PRIMER_OPT_SIZE']=str(my_args.opt_primer_length)
 def_dict['PRIMER_PAIR_MAX_DIFF_TM']=str(my_args.max_tm_diff)
 def_dict['PRIMER_OPT_TM']=str(my_args.optimum_tm)
@@ -79,12 +70,8 @@ def_dict['PRIMER_OPT_GC_PERCENT']=str(my_args.opt_GC_percent)
 def_dict['PRIMER_MAX_POLY_X']=str(my_args.maxpolyx)
 def_dict['PRIMER_GC_CLAMP']=str(my_args.gc_clamp)
 
-
 #open input files
-#in_seq_handle = open(my_args.in_file)
-#in_gff_handle = open(my_args.gff_file)
-#in_target_handle=open(my_args.target_file)
-#read  target feature IDs into list
+
 targets=my_args.target_file.readlines()
 my_args.target_file.close()
 ##and create a hit list of sequences from this
