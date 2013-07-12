@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <tool id="Genetic_Marker_Design_2" name="Design primers to features">
   <description>Design PCR Primers to Features</description>
-  <command interpreter="python">design_primers.py $inputfastaFile $inputSNPfile $inputTargetfile $min_size $max_size >  $primer_outputfile  </command>
+  <command interpreter="python">design_primers.py -i $inputfastaFile -g $inputSNPfile -T $inputTargetfile -p $min_size -P $max_size >  $primer_outputfile  </command>
   <inputs>
     <param format="fasta" name="inputfastaFile" type="data" label="Multifasta Source file" />
     <param format="gff3" name="inputSNPfile" type="data" label="annotation file(Gff3)" />
@@ -18,6 +18,7 @@
 **TIP**
 
 This tool designs primer pairs to flank features
+**This version doesnt predict melt**
 
 It takes 
 
