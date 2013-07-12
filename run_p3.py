@@ -1,6 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/pyrthon
+##run primer3 by passing Python dictionary
 
-#Run_P3.py
+#un_P3.py
 
 import subprocess as sp
 import copy

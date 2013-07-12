@@ -6,8 +6,6 @@
 #                             [-m MAX_TM_DIFF] [-t OPTIMUM_TM]
 #                             [-G OPT_GC_PERCENT] [-x MAXPOLYX] [-c GC_CLAMP]
 
-
-
 #Copyright 2013 John McCallum & Susan Thomson
 #New Zealand Institute for Plant and Food Research
 #This program is free software: you can redistribute it and/or modify
