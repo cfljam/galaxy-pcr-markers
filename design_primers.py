@@ -30,7 +30,7 @@ from BCBio import GFF
 from BCBio.GFF import GFFExaminer
 from Bio import SeqIO
 import run_p3 as P3
-import umelt_service as umelts
+#import umelt_service as umelts
 import argparse	
 
 ##Primer3 defaults or additional options defined as dictionary 
@@ -67,6 +67,10 @@ def_dict['PRIMER_OPT_TM']=str(my_args.optimum_tm)
 def_dict['PRIMER_OPT_GC_PERCENT']=str(my_args.opt_GC_percent)
 def_dict['PRIMER_MAX_POLY_X']=str(my_args.maxpolyx)
 def_dict['PRIMER_GC_CLAMP']=str(my_args.gc_clamp)
+
+##conditional import of umelt
+if my_args.run_uMelt:
+    import umelt_service as umelts
 
 #open input files
 
