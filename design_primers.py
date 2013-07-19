@@ -30,7 +30,7 @@ from BCBio import GFF
 from BCBio.GFF import GFFExaminer
 from Bio import SeqIO
 import run_p3 as P3
-#import umelt_service as umelts
+import umelt_service as umelts
 import argparse	
 
 ##Primer3 defaults or additional options defined as dictionary 
