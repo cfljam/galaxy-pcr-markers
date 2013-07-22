@@ -7,20 +7,20 @@ import subprocess as sp
 import copy
 
 
-if "check_output" not in dir( subprocess ): # duck punch it in!
+if "check_output" not in dir(sp): # duck punch it in!
     def f(*popenargs, **kwargs):
         if 'stdout' in kwargs:
             raise ValueError('stdout argument not allowed, it will be overridden.')
-        process = subprocess.Popen(stdout=subprocess.PIPE, *popenargs, **kwargs)
+        process = sp.Popen(stdout=sp.PIPE, *popenargs, **kwargs)
         output, unused_err = process.communicate()
         retcode = process.poll()
         if retcode:
             cmd = kwargs.get("args")
             if cmd is None:
                 cmd = popenargs[0]
-            raise sp.CalledProcessError
+            raise sp.CalledProcessError(retcode,cmd)
         return output
-    subprocess.check_output = f
+    sp.check_output = f
 
 
 
