@@ -7,9 +7,6 @@ import subprocess as sp
 import copy
 
 
-
-import subprocess
-
 if "check_output" not in dir( subprocess ): # duck punch it in!
     def f(*popenargs, **kwargs):
         if 'stdout' in kwargs:
@@ -21,9 +18,11 @@ if "check_output" not in dir( subprocess ): # duck punch it in!
             cmd = kwargs.get("args")
             if cmd is None:
                 cmd = popenargs[0]
-            raise CalledProcessError(retcode, cmd)
+            raise sp.CalledProcessError
         return output
     subprocess.check_output = f
+
+
 
 
 ##call P3 with dict of args, returns dict, no exception handling 
@@ -35,7 +34,7 @@ def run_P3(target_dict):
         p3_str+=str(target_dict[key])
         p3_str+='\n'
     p3_str+='='
-    input_str='echo -e \"' + p3_str + '\" | primer3_core'
+    input_str='echo -e \"' + p3_str + '\" | primer3_core '
 ###exception handling to be added here
     output = sp.check_output(input_str,shell=True)
     output_fields=output.split('\n')
