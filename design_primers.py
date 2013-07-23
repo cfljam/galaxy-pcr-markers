@@ -146,13 +146,9 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
                                     try:
                                         ref_melt_Tm=umelts.getTm(umelts.getmelt(amp_seq.tostring()[amp_start:amp_end+1]))
 					var_melt_Tm=umelts.getTm(umelts.getmelt(mutamp_seq.tostring()[amp_start:amp_end+1]))
-                                    except urllib2.HTTPError, e:
-                                        print e.code
-                                    except urllib2.URLError, e:
-                                        print e.args
-#                                    except:
-#					ref_melt_Tm=0 ##preferably something more informative?
-#					var_melt_Tm=0
+                                    except:
+					ref_melt_Tm=0 ##preferably something more informative?
+					var_melt_Tm=0 ##exception handling to be added
 				print mytarget.id, amp_end-amp_start,target_feat.qualifiers['Reference_seq'][0], target_feat.qualifiers['Variant_seq'][0],primerset['PRIMER_LEFT_SEQUENCE'],primerset['PRIMER_RIGHT_SEQUENCE'], ref_melt_Tm,var_melt_Tm,abs(ref_melt_Tm-var_melt_Tm)#, amp_seq.tostring()[amp_start:amp_end+1], mutamp_seq.tostring()[amp_start:amp_end+1]
 
 my_args.gff_file.close()
