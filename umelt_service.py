@@ -19,7 +19,7 @@ def getmelt(input_seq):
     data = urllib.urlencode(values)
     req = urllib2.Request(url, data)
     try:
-        response = urllib2.urlopen(req,timeout=50)
+        response = urllib2.urlopen(req,timeout=500)
     except:
         return none ##raise appropriate errors
     else:
