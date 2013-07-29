@@ -54,6 +54,13 @@ parser.add_argument('-t', type=int, help="optimum Tm for primers, recommend rang
 parser.add_argument('-G', type=int, help="optimum GC percentage of primers", dest='opt_GC_percent', default=50)                ## PRIMER_OPT_GC_PERCENT
 parser.add_argument('-x', type=int, help="maximum polyx, recommend less than 4", dest='maxpolyx', default=3)                   ## PRIMER_MAX_POLY_X
 parser.add_argument('-c', type=int, help="number of C/Gs at end, recommend 2", dest='gc_clamp', default=1)                     ## PRIMER_GC_CLAMP
+
+parser.add_argument('-e', type=int, help="maximum allowable 3'-anchored complementarity", dest='maxselfend', default=3)                     ## PRIMER_MAX_SELF_END
+parser.add_argument('-a', type=int, help="maximum complementarity between left and right or self", dest='maxselfany', default=8)                     ## PRIMER_MAX_SELF_ANY
+parser.add_argument('-maxgc', type=float, help="Maximum allowable percentage of Gs and Cs in any primer.", dest='maxgc', default=80.0)                     ## PRIMER_MAX_GC
+parser.add_argument('-mingc', type=float, help="Minimum allowable percentage of Gs and Cs in any primer.", dest='mingc', default=20.0)                     ## PRIMER_MIN_GC
+
+
 parser.add_argument('-d', type=str, help="variant indentifier delimiter, used to separate sequence ID from rest ", dest='target_delim', default=':')                      
 my_args = parser.parse_args()  
 
@@ -67,6 +74,13 @@ def_dict['PRIMER_OPT_TM']=str(my_args.optimum_tm)
 def_dict['PRIMER_OPT_GC_PERCENT']=str(my_args.opt_GC_percent)
 def_dict['PRIMER_MAX_POLY_X']=str(my_args.maxpolyx)
 def_dict['PRIMER_GC_CLAMP']=str(my_args.gc_clamp)
+
+def_dict['PRIMER_MAX_SELF_END']=str(my_args.maxselfend)
+def_dict['PRIMER_MAX_SELF_ANY']=str(my_args.maxselfany)
+def_dict['PRIMER_MAX_GC']=str(my_args.maxgc)
+def_dict['PRIMER_MIN_GC']=str(my_args.mingc)
+
+
 
 ##conditional import of umelt
 if my_args.run_uMelt:
