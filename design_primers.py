@@ -94,7 +94,7 @@ my_args.target_file.close()
 target_seq_id_list = [re.split(my_args.target_delim,X)[0] for X in targets] ## target_delimiter defaults to ':'  e.g. ABC:SNP:SAMTOOL:1234 
 
 ##print header
-print "SNP_Target_ID", "Position","Ref_base","Variant_base" ,"PRIMER_LEFT_SEQUENCE",'PRIMER_RIGHT_SEQUENCE', "ref_melt_Tm","var_melt_Tm","Tm_difference"
+print "SNP_Target_ID", "Position","Ref_base","Variant_base" ,"Amplicon_bp","PRIMER_LEFT_SEQUENCE",'PRIMER_RIGHT_SEQUENCE', "ref_melt_Tm","var_melt_Tm","Tm_difference"
 ##create iterator returning sequence records
 for myrec in SeqIO.parse(my_args.in_file, "fasta"):
     #check if this sequence is included in the target list
@@ -163,7 +163,7 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
                                     except:
 					ref_melt_Tm=0 ##preferably something more informative?
 					var_melt_Tm=0 ##exception handling to be added
-				print mytarget.id, amp_end-amp_start,target_feat.qualifiers['Reference_seq'][0], target_feat.qualifiers['Variant_seq'][0],primerset['PRIMER_LEFT_SEQUENCE'],primerset['PRIMER_RIGHT_SEQUENCE'], ref_melt_Tm,var_melt_Tm,abs(ref_melt_Tm-var_melt_Tm)#, amp_seq.tostring()[amp_start:amp_end+1], mutamp_seq.tostring()[amp_start:amp_end+1]
+				print mytarget.id, featLocation + 1 ,target_feat.qualifiers['Reference_seq'][0], target_feat.qualifiers['Variant_seq'][0],amp_end-amp_start,primerset['PRIMER_LEFT_SEQUENCE'],primerset['PRIMER_RIGHT_SEQUENCE'], ref_melt_Tm,var_melt_Tm,abs(ref_melt_Tm-var_melt_Tm)#, amp_seq.tostring()[amp_start:amp_end+1], mutamp_seq.tostring()[amp_start:amp_end+1]
 
 my_args.gff_file.close()
 my_args.in_file.close()
