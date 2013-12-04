@@ -145,9 +145,10 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
                         my_target_dict={'SEQUENCE_ID' : rec.name, 'SEQUENCE_TEMPLATE': targetRec.seq.tostring(),'SEQUENCE_TARGET': str(target_feat.location.start.position) + ',1','SEQUENCE_INTERNAL_EXCLUDED_REGION': excludes_str}
                         my_target_dict.update(def_dict) ##add in defaults
 			result=P3.run_P3(target_dict=my_target_dict)
-			amp_seq=targetRec.seq ##need to make this conditional on getting a result >0
-			mutamp_seq=targetRec.seq.tomutable()
-			mutamp_seq[target_feat.location.start]=target_feat.qualifiers['Variant_seq'][0] #mutate to variant
+                        if my_args.run_uMelt:
+                            amp_seq=targetRec.seq ##need to make this conditional on getting a result >0 and melt=True
+                            mutamp_seq=targetRec.seq.tomutable()
+                            mutamp_seq[target_feat.location.start]=target_feat.qualifiers['Variant_seq'][0] #mutate to variant
 			for primerset in result:
 				amp_start=int(primerset['PRIMER_LEFT'].split(',')[0])
 				amp_end=int(primerset['PRIMER_RIGHT'].split(',')[0])
@@ -160,7 +161,12 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
                                     except:
 					ref_melt_Tm=0 ##preferably something more informative?
 					var_melt_Tm=0 ##exception handling to be added
-				print mytarget.id, featLocation + 1 ,target_feat.qualifiers['Reference_seq'][0], target_feat.qualifiers['Variant_seq'][0],amp_end-amp_start,primerset['PRIMER_LEFT_SEQUENCE'],primerset['PRIMER_RIGHT_SEQUENCE'], ref_melt_Tm,var_melt_Tm,abs(ref_melt_Tm-var_melt_Tm)#, amp_seq.tostring()[amp_start:amp_end+1], mutamp_seq.tostring()[amp_start:amp_end+1]
+                                reference_seq=targetRec.seq[target_feat.location.start.position:target_feat.location.end.position-1]
+                                if target_feat.qualifiers.has_key('Variant_seq'):
+                                    variant_seq=target_feat.qualifiers['Variant_seq'][0]
+                                else:
+                                    variant_seq=" "
+                                print mytarget.id, featLocation + 1 ,reference_seq, variant_seq,amp_end-amp_start,primerset['PRIMER_LEFT_SEQUENCE'],primerset['PRIMER_RIGHT_SEQUENCE'], ref_melt_Tm,var_melt_Tm,abs(ref_melt_Tm-var_melt_Tm)#, amp_seq.tostring()[amp_start:amp_end+1], mutamp_seq.tostring()[amp_start:amp_end+1]
 
 my_args.gff_file.close()
 my_args.in_file.close()
