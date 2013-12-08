@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 ##design primers to features in multiple sequences, with option to predict melting
 #usage: design_HRM_primers.py [-h] -i IN_FILE -g GFF_FILE -T TARGET_FILE [-u]
@@ -161,11 +162,11 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
                                     except:
 					ref_melt_Tm=0 ##preferably something more informative?
 					var_melt_Tm=0 ##exception handling to be added
-                                reference_seq=targetRec.seq[target_feat.location.start.position:target_feat.location.end.position-1]
+                                reference_seq=targetRec.seq[target_feat.location.start.position:target_feat.location.end.position]
                                 if target_feat.qualifiers.has_key('Variant_seq'):
                                     variant_seq=target_feat.qualifiers['Variant_seq'][0]
                                 else:
-                                    variant_seq=" "
+                                    variant_seq="NA"
                                 print mytarget.id, featLocation + 1 ,reference_seq, variant_seq,amp_end-amp_start,primerset['PRIMER_LEFT_SEQUENCE'],primerset['PRIMER_RIGHT_SEQUENCE'], ref_melt_Tm,var_melt_Tm,abs(ref_melt_Tm-var_melt_Tm)#, amp_seq.tostring()[amp_start:amp_end+1], mutamp_seq.tostring()[amp_start:amp_end+1]
 
 my_args.gff_file.close()
