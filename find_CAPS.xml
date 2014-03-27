@@ -9,6 +9,13 @@
   <outputs>
      <data format="interval" name="outputfile" />
   </outputs>
+  <tests>
+        <test>
+                <param name="inputSNPGff3File" value="targets.gff" ftype="gff3"/>
+                <param name="inputFasta" value="targets.fasta" ftype="fasta"/>
+                <output name="outputfile" file="find_caps_output.txt"/>
+        </test>
+  </tests>
 <help>
 .. class:: infomark
 	
@@ -32,7 +39,7 @@ record ID,  start, stop, feature ID,enzyme, phase (ie whether it cuts reference 
 
 
 
-*input GFF*
+*input GFF3*
 
 ::
 
