@@ -1,0 +1,188 @@
+
+Ipcress result
+--------------
+ Experiment: k69_93535:SAMTOOLS:SNP:1336
+    Primers: A B
+     Target: k69_93535:filter(unmasked)
+    Matches: 20/20 22/22
+    Product: 82 bp (range 50-100)
+Result type: forward
+
+...TTAGAAGGAACGCGAGAAGG................................ # forward
+   ||||||||||||||||||||-->
+5'-TTAGAAGGAACGCGAGAAGG-3' 3'-GAATGCGGATCAAACCAACAAC-5' # primers
+                           <--||||||||||||||||||||||
+..............................GAATGCGGATCAAACCAACAAC... # revcomp
+--
+ipcress: k69_93535:filter(unmasked) k69_93535:SAMTOOLS:SNP:1336 82 A 1297 0 B 1357 0 forward
+
+Ipcress result
+--------------
+ Experiment: k69_93535:SAMTOOLS:SNP:1336
+    Primers: A B
+     Target: k69_93535:filter(unmasked)
+    Matches: 20/20 20/20
+    Product: 85 bp (range 50-100)
+Result type: forward
+
+...TTTAGAAGGAACGCGAGAAG.............................. # forward
+   ||||||||||||||||||||-->
+5'-TTTAGAAGGAACGCGAGAAG-3' 3'-GCGGATCAAACCAACAACAA-5' # primers
+                           <--||||||||||||||||||||
+..............................GCGGATCAAACCAACAACAA... # revcomp
+--
+ipcress: k69_93535:filter(unmasked) k69_93535:SAMTOOLS:SNP:1336 85 A 1296 0 B 1361 0 forward
+
+Ipcress result
+--------------
+ Experiment: k69_93535:SAMTOOLS:SNP:1336
+    Primers: A B
+     Target: k69_93535:filter(unmasked)
+    Matches: 21/21 20/20
+    Product: 86 bp (range 50-100)
+Result type: forward
+
+...GTTTAGAAGGAACGCGAGAAG.............................. # forward
+   |||||||||||||||||||||-->
+5'-GTTTAGAAGGAACGCGAGAAG-3' 3'-GCGGATCAAACCAACAACAA-5' # primers
+                            <--||||||||||||||||||||
+...............................GCGGATCAAACCAACAACAA... # revcomp
+--
+ipcress: k69_93535:filter(unmasked) k69_93535:SAMTOOLS:SNP:1336 86 A 1295 0 B 1361 0 forward
+
+Ipcress result
+--------------
+ Experiment: k69_93535:SAMTOOLS:SNP:1336
+    Primers: A B
+     Target: k69_93535:filter(unmasked)
+    Matches: 20/20 22/22
+    Product: 87 bp (range 50-100)
+Result type: forward
+
+...TTAGAAGGAACGCGAGAAGG................................ # forward
+   ||||||||||||||||||||-->
+5'-TTAGAAGGAACGCGAGAAGG-3' 3'-CGGATCAAACCAACAACAACTC-5' # primers
+                           <--||||||||||||||||||||||
+..............................CGGATCAAACCAACAACAACTC... # revcomp
+--
+ipcress: k69_93535:filter(unmasked) k69_93535:SAMTOOLS:SNP:1336 87 A 1297 0 B 1362 0 forward
+
+Ipcress result
+--------------
+ Experiment: k69_93535:SAMTOOLS:SNP:1336
+    Primers: A B
+     Target: k69_93535:filter(unmasked)
+    Matches: 20/20 22/22
+    Product: 88 bp (range 50-100)
+Result type: forward
+
+...TTAGAAGGAACGCGAGAAGG................................ # forward
+   ||||||||||||||||||||-->
+5'-TTAGAAGGAACGCGAGAAGG-3' 3'-GGATCAAACCAACAACAACTCG-5' # primers
+                           <--||||||||||||||||||||||
+..............................GGATCAAACCAACAACAACTCG... # revcomp
+--
+ipcress: k69_93535:filter(unmasked) k69_93535:SAMTOOLS:SNP:1336 88 A 1297 0 B 1363 0 forward
+
+Ipcress result
+--------------
+ Experiment: k69_98089:SAMTOOLS:SNP:30
+    Primers: A B
+     Target: k69_98089:filter(unmasked)
+    Matches: 25/25 19/19
+    Product: 65 bp (range 50-100)
+Result type: forward
+
+...CAAATCCAAACATGTTATCTTCTTC............................. # forward
+   |||||||||||||||||||||||||-->
+5'-CAAATCCAAACATGTTATCTTCTTC-3' 3'-GGAGGAGGAGTGGTTCAGT-5' # primers
+                                <--|||||||||||||||||||
+...................................GGAGGAGGAGTGGTTCAGT... # revcomp
+--
+ipcress: k69_98089:filter(unmasked) k69_98089:SAMTOOLS:SNP:30 65 A 1 0 B 47 0 forward
+
+Ipcress result
+--------------
+ Experiment: k69_98089:SAMTOOLS:SNP:30
+    Primers: A B
+     Target: k69_98089:filter(unmasked)
+    Matches: 25/25 20/20
+    Product: 67 bp (range 50-100)
+Result type: forward
+
+...CAAATCCAAACATGTTATCTTCTTC.............................. # forward
+   |||||||||||||||||||||||||-->
+5'-CAAATCCAAACATGTTATCTTCTTC-3' 3'-GAGGAGGAGTGGTTCAGTTT-5' # primers
+                                <--||||||||||||||||||||
+...................................GAGGAGGAGTGGTTCAGTTT... # revcomp
+--
+ipcress: k69_98089:filter(unmasked) k69_98089:SAMTOOLS:SNP:30 67 A 1 0 B 48 0 forward
+
+Ipcress result
+--------------
+ Experiment: k69_98089:SAMTOOLS:SNP:30
+    Primers: A B
+     Target: k69_98089:filter(unmasked)
+    Matches: 25/25 20/20
+    Product: 90 bp (range 50-100)
+Result type: forward
+
+...CAAATCCAAACATGTTATCTTCTTC.............................. # forward
+   |||||||||||||||||||||||||-->
+5'-CAAATCCAAACATGTTATCTTCTTC-3' 3'-CGAGTTGCAGTCTAGTAGTT-5' # primers
+                                <--||||||||||||||||||||
+...................................CGAGTTGCAGTCTAGTAGTT... # revcomp
+--
+ipcress: k69_98089:filter(unmasked) k69_98089:SAMTOOLS:SNP:30 90 A 1 0 B 71 0 forward
+
+Ipcress result
+--------------
+ Experiment: k69_98089:SAMTOOLS:SNP:30
+    Primers: A B
+     Target: k69_98089:filter(unmasked)
+    Matches: 25/25 20/20
+    Product: 96 bp (range 50-100)
+Result type: forward
+
+...CAAATCCAAACATGTTATCTTCTTC.............................. # forward
+   |||||||||||||||||||||||||-->
+5'-CAAATCCAAACATGTTATCTTCTTC-3' 3'-GCAGTCTAGTAGTTGTGCTT-5' # primers
+                                <--||||||||||||||||||||
+...................................GCAGTCTAGTAGTTGTGCTT... # revcomp
+--
+ipcress: k69_98089:filter(unmasked) k69_98089:SAMTOOLS:SNP:30 96 A 1 0 B 77 0 forward
+
+Ipcress result
+--------------
+ Experiment: k69_98089:SAMTOOLS:SNP:30
+    Primers: A B
+     Target: k69_98089:filter(unmasked)
+    Matches: 25/25 21/21
+    Product: 97 bp (range 50-100)
+Result type: forward
+
+...CAAATCCAAACATGTTATCTTCTTC............................... # forward
+   |||||||||||||||||||||||||-->
+5'-CAAATCCAAACATGTTATCTTCTTC-3' 3'-GCAGTCTAGTAGTTGTGCTTG-5' # primers
+                                <--|||||||||||||||||||||
+...................................GCAGTCTAGTAGTTGTGCTTG... # revcomp
+--
+ipcress: k69_98089:filter(unmasked) k69_98089:SAMTOOLS:SNP:30 97 A 1 0 B 77 0 forward
+
+Ipcress result
+--------------
+ Experiment: k69_98089:SAMTOOLS:SNP:550
+    Primers: A B
+     Target: k69_98089:filter(unmasked)
+    Matches: 20/20 24/24
+    Product: 71 bp (range 50-100)
+Result type: forward
+
+...TCGGGAAGACTGAAAGAACG.................................. # forward
+   ||||||||||||||||||||-->
+5'-TCGGGAAGACTGAAAGAACG-3' 3'-CTAACACCTTTGAAAGTACATACG-5' # primers
+                           <--||||||||||||||||||||||||
+..............................CTAACACCTTTGAAAGTACATACG... # revcomp
+--
+ipcress: k69_98089:filter(unmasked) k69_98089:SAMTOOLS:SNP:550 71 A 516 0 B 563 0 forward
+-- completed ipcress analysis
