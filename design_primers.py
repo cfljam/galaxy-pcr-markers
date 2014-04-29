@@ -63,7 +63,11 @@ parser.add_argument('-mingc', type=float, help="Minimum allowable percentage of 
 
 
 parser.add_argument('-d', type=str, help="variant indentifier delimiter, used to separate sequence ID from rest ", dest='target_delim', default=':')                      
-my_args = parser.parse_args()  
+try:
+        my_args = parser.parse_args()  
+except SystemExit:
+        print("\nOops, an argument is missing/invalid, exiting...\n")
+        exit(0)
 
 ##update from args. NEEDS TO BE FINISHED
 productsizerange = str(my_args.prod_min_size) + "-" + str(my_args.prod_max_size)
