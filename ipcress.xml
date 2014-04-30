@@ -3,12 +3,14 @@
         <description>In-Silico PCR Experiment Simulation System</description>
         <version_command>ipcress -v</version_command>
         <command>
-                ipcress -i $input_primers -s $input_seqs -m $mismatch $products_as_fasta $pretty -S $seed_length > $pcr_products
+                awk -v min=$min_length -v max=$max_length '{print $1,$6,$7, min, max}' $input_primers | ipcress -i /dev/stdin -s $input_seqs -m $mismatch $products_as_fasta $pretty -S $seed_length > $pcr_products
         </command>
         <inputs>
-                <param format="txt" name="input_primers" type="data" label="PCR Experiment Data(ipcress format)" />
+                <param format="txt" name="input_primers" type="data" label="PCR Experiment Data" />
                 <param format="fasta" name="input_seqs" type="data" label="Sequences (Fasta)" />
                 <param name="mismatch" size="10" type="integer" value="0" label="Mismatches allowed per primer" />
+                <param name="min_length" size="10" type="integer" value="50" label="Minimum PCR product length" />
+                <param name="max_length" size="10" type="integer" value="100" label="Maximum PCR product length" />
                 <param name="products_as_fasta" type="boolean" truevalue="-P" falsevalue="" label="Display PCR products as a FASTA format sequence" />
                 <param name="pretty" type="boolean" truevalue="-p 1" falsevalue="-p 0" checked="true" label="Display Result in pretty format" />
                 <param name="seed_length" size="10" type="integer" value="12" label="Seed length: 0 => Use Full Primer Length" />
@@ -17,7 +19,7 @@
                 <data format="txt" name="pcr_products" />
         </outputs>
         <stdio>
-                <exit_code range="2:" level="fatal" description="Fatal Error" />
+                <exit_code range="1:" level="fatal" description="Fatal Error" />
         </stdio>
         <tests>
         <test>
