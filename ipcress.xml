@@ -3,7 +3,7 @@
         <description>In-Silico PCR Experiment Simulation System</description>
         <version_command>ipcress -v</version_command>
         <command>
-                awk -v min=$min_length -v max=$max_length '{print $1,$6,$7, min, max}' $input_primers | ipcress -i /dev/stdin -s $input_seqs -m $mismatch $products_as_fasta $pretty -S $seed_length > $pcr_products
+                awk -v min=$min_length -v max=$max_length '{print $1,$2,$3, min, max}' $input_primers | ipcress -i /dev/stdin -s $input_seqs -m $mismatch $products_as_fasta $pretty -S $seed_length > $pcr_products
         </command>
         <inputs>
                 <param format="txt" name="input_primers" type="data" label="PCR Experiment Data" />
