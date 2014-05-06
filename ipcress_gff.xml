@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<tool id="ipcress_gff" name="IPCRESS to GFF">
+        <description>Convert output from In-Silico PCR Experiment Simulation System to GFF format</description>
+        <command>
+                awk '/^ipcress:/, split($2,HIT,":"){print HIT[1],$3,$4,$5,$6,$7,$8,$9,$10,$11}' $input1 | awk -v OFS='\t' '{print $1,"ipcress","PCR_product",$5,$8,".","+",".","Name="$2}' > $output1
+        </command>
+        <inputs>
+                <param format="txt" name="input1" type="data" label="iPCRESS ouptut" />
+        </inputs>
+        <outputs>
+                <data format="gff" name="output1" />
+        </outputs>
+        <tests>
+        <test>
+                <param name="input1" value="ipcress.out" ftype="txt" />
+                <output name="output1" file="ipcress_gff.out" />
+        </test>
+        </tests>
+        <help>
+Uses awk to parse IPCRESS output to gff file format
+        </help>
+</tool>
