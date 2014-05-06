@@ -145,10 +145,10 @@ for line in in_vcf_file:
             end = start 
         gen = get_gen(info[8:], reference)
         out_gff_file.write(
-            ("%s\t%s\t%s\t%d\t%d\t%s\t%s\t%s\tID=%s:%s:%d;Variant" +
+            ("%s\t%s\t%s\t%d\t%d\t%s\t%s\t%s\tID=%s:%s:%s:%d;Variant" +
              "_seq=%s;Reference_seq=%s;Total_reads=%s;Zygosity=%s\n") %
             ( seqid, source,record_type, start, end, score, strand, phase,seqid, 
-              record_type, start, variant, reference, reads, gen))
+              source, record_type, start, variant, reference, reads, gen))
 
 out_gff_file.close()    
 
