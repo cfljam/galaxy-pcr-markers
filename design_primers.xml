@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <tool id="Genetic_Marker_Design_2" name="Design primers to features">
   <description>Design PCR Primers to Features</description>
- <command interpreter="python">
+ <command interpreter="python -W ignore">
       #if 'Yes' in $uMelt.value
           design_primers.py -i $inputfastaFile -g $inputSNPfile -T $inputTargetfile -p $min_size -P $max_size -u >  $primer_outputfile
       #else
