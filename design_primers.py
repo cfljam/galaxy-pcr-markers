@@ -67,7 +67,7 @@ try:
         my_args = parser.parse_args()  
 except SystemExit:
         print("\nOops, an argument is missing/invalid, exiting...\n")
-        exit(0)
+        sys.exit(0)
 
 ##update from args. NEEDS TO BE FINISHED
 productsizerange = str(my_args.prod_min_size) + "-" + str(my_args.prod_max_size)

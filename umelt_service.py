@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-##interrogate umelt service at UNiv of Utah
+##interrogate umelt service at Univ of Utah
 import sys
 import urllib
 import urllib2
@@ -12,6 +12,7 @@ from scipy.interpolate import interp1d
 
 
 url='https://www.dna.utah.edu/db/services/cgi-bin/udesign.cgi'
+timeout_sec=500 ## default for timeout
 
 # Query UW melt prediction service for a single sequence, returning default array for helicity, assuming within temperature range of 65-95
 def getmelt(input_seq):
@@ -19,7 +20,7 @@ def getmelt(input_seq):
     data = urllib.urlencode(values)
     req = urllib2.Request(url, data)
     try:
-        response = urllib2.urlopen(req,timeout=500)
+        response = urllib2.urlopen(req,timeout=timeout_sec)
     except urllib2.HTTPError, e:
         print 'The server couldn\'t fulfill the request.'
         print 'Error code: ', e.code
