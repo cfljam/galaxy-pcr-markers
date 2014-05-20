@@ -166,7 +166,7 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
                                     except:
 					ref_melt_Tm=0 ##preferably something more informative?
 					var_melt_Tm=0 ##exception handling to be added
-                                reference_seq=targetRec.seq[target_feat.location.start.position:target_feat.location.end.position]
+                                reference_seq=targetRec.seq[target_feat.location.start.position:target_feat.location.end.position-1]
                                 if target_feat.qualifiers.has_key('Variant_seq'):
                                     variant_seq=target_feat.qualifiers['Variant_seq'][0]
                                 else:
