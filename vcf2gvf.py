@@ -58,11 +58,9 @@ try:
             var_type=get_vartype(info_dict['TYPE'])
             ID=":".join([var[0],source_type,var_type,var[1]])
             start=int(var[1])
-            if not info_dict.has_key('LEN'):
-                info_dict['LEN']=str(len(var[3])) ##just using reference length in this case
-            length=int(max(info_dict['LEN'].split(','))) ##for annotation purposes use longest allele
+            length=len(var[3]) ## using reference length in this case
             attributes=";".join(['ID='+ID,'Reference_seq='+var[3],'Variant_seq='+var[4]])
-            output_line=[var[0], source_type, var_type,  start, start+length-1 ,'.','.','.',attributes,"\n"]
+            output_line=[var[0], source_type, var_type,  str(start), str(start+length-1) ,'.','.','.',attributes,"\n"]
             out_gff_file.write("\t".join([str(X) for X in output_line]))
 finally:
     in_vcf_file.close()

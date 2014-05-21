@@ -153,7 +153,7 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
                         if my_args.run_uMelt:
                             amp_seq=targetRec.seq ##need to make this conditional on getting a result >0 and melt=True
                             mutamp_seq=targetRec.seq.tomutable()
-                            mutamp_seq[target_feat.location.start]=target_feat.qualifiers['Variant_seq'][0] #mutate to variant
+                            mutamp_seq[target_feat.location.start:target_feat.location.end]=target_feat.qualifiers['Variant_seq'][0] #mutate to variant
 			for primerset in result:
 				amp_start=int(primerset['PRIMER_LEFT'].split(',')[0])
 				amp_end=int(primerset['PRIMER_RIGHT'].split(',')[0])
@@ -166,7 +166,7 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
                                     except:
 					ref_melt_Tm=0 ##preferably something more informative?
 					var_melt_Tm=0 ##exception handling to be added
-                                reference_seq=targetRec.seq[target_feat.location.start.position:target_feat.location.end.position-1]
+                                reference_seq=targetRec.seq[target_feat.location.start.position:target_feat.location.end.position]
                                 if target_feat.qualifiers.has_key('Variant_seq'):
                                     variant_seq=target_feat.qualifiers['Variant_seq'][0]
                                 else:
