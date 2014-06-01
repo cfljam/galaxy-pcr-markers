@@ -1,15 +1,15 @@
 galaxy-pcr-markers
 ==================
 
-Scripts for design of PCR-based Marker Assays from DNA sequence variant data, and xml wrappers for use in  Galaxy  workflow environment 
+Scripts for design of PCR-based Marker Assays from DNA sequence variant data, and xml wrappers for use in  Galaxy  workflow environment. 
 
 Also available for download at Galaxy Toolshed http://toolshed.g2.bx.psu.edu/
 hg clone http://toolshed.g2.bx.psu.edu/repos/john-mccallum/pcr_markers
 
-NOTE that the primer design tool *design_primers.py*  relies on EMBOSS ePrimer3 which depends on Primer3 1.1.4.
-The updated tool *design_HRM_primers.py* does not have this restriction and should work with Primer3 V2.
+**Notes**
 
-Please see development branch HRM for optimised design of high-resolution melting PCR assays using the uMelt web service at University of Utah.
+* This release breaks reliance on EMBOSS ePrimer3 and  Primer3 V1
+* The script design_primers.py adds  optimised design of high-resolution melting PCR assays using the uMelt web service at University of Utah (https://www.dna.utah.edu/umelt/umelt.html)
 
 
 **CITATION**
