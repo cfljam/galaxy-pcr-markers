@@ -159,19 +159,22 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
 				amp_end=int(primerset['PRIMER_RIGHT'].split(',')[0])
                                 ref_melt_Tm=0
                                 var_melt_Tm=0
+                                diff_melt=0
                                 if my_args.run_uMelt:
                                     try:
                                         ref_melt_Tm=umelts.getTm(umelts.getmelt(amp_seq.tostring()[amp_start:amp_end+1]))
 					var_melt_Tm=umelts.getTm(umelts.getmelt(mutamp_seq.tostring()[amp_start:amp_end+1]))
+                                        diff_melt=abs(ref_melt_Tm - var_melt_Tm)
                                     except:
-					ref_melt_Tm=0 ##preferably something more informative?
-					var_melt_Tm=0 ##exception handling to be added
+					ref_melt_Tm="NA" ##preferably something more informative?
+					var_melt_Tm="NA" ##exception handling to be added
+                                        diff_melt="NA"
                                 reference_seq=target_feat.qualifiers['Reference_seq'][0]
                                 if target_feat.qualifiers.has_key('Variant_seq'):
                                     variant_seq=target_feat.qualifiers['Variant_seq'][0]
                                 else:
                                     variant_seq="NA"
-                                print mytarget.id, featLocation + 1 ,reference_seq, variant_seq,amp_end-amp_start,primerset['PRIMER_LEFT_SEQUENCE'],primerset['PRIMER_RIGHT_SEQUENCE'], ref_melt_Tm,var_melt_Tm,abs(ref_melt_Tm-var_melt_Tm)#, amp_seq.tostring()[amp_start:amp_end+1], mutamp_seq.tostring()[amp_start:amp_end+1]
+                                print mytarget.id, featLocation + 1 ,reference_seq, variant_seq,amp_end-amp_start,primerset['PRIMER_LEFT_SEQUENCE'],primerset['PRIMER_RIGHT_SEQUENCE'], ref_melt_Tm,var_melt_Tm,diff_melt#, amp_seq.tostring()[amp_start:amp_end+1], mutamp_seq.tostring()[amp_start:amp_end+1]
 
 my_args.gff_file.close()
 my_args.in_file.close()

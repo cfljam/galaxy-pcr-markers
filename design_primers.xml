@@ -23,6 +23,9 @@
   <outputs>
      <data format="tabular"  name="primer_outputfile" />
   </outputs>
+  <stdio>
+        <exit_code range="1:" level="fatal" description="Fatal Error" />
+  </stdio>
 <help>
 .. class:: infomark
 

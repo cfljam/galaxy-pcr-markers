@@ -22,11 +22,11 @@ def getmelt(input_seq):
     try:
         response = urllib2.urlopen(req,timeout=timeout_sec)
     except urllib2.HTTPError, e:
-        print 'The server couldn\'t fulfill the request.'
-        print 'Error code: ', e.code
+        print >> sys.stderr, 'The server couldn\'t fulfill the request.'
+        print >> sys.stderr, 'Error code: ', e.code
     except urllib2.URLError, e:
-        print 'We failed to reach a server.'
-        print 'Reason: ', e.reason
+        print >> sys.stderr, 'We failed to reach a server.'
+        print >> sys.stderr, 'Reason: ', e.reason
     else:
         melt_data = response.read()
         tree = ET.fromstring(melt_data)
