@@ -32,9 +32,9 @@ from BCBio.GFF import GFFExaminer
 from Bio import SeqIO
 import run_p3 as P3
 #import umelt_service as umelts
-import argparse	
+import argparse
 
-##Primer3 defaults or additional options defined as dictionary 
+##Primer3 defaults or additional options defined as dictionary
 def_dict={
 'PRIMER_MIN_SIZE':'18',
 'PRIMER_MAX_SIZE':'25',
@@ -62,9 +62,9 @@ parser.add_argument('-maxgc', type=float, help="Maximum allowable percentage of 
 parser.add_argument('-mingc', type=float, help="Minimum allowable percentage of Gs and Cs in any primer.", dest='mingc', default=20.0)                     ## PRIMER_MIN_GC
 
 
-parser.add_argument('-d', type=str, help="variant indentifier delimiter, used to separate sequence ID from rest ", dest='target_delim', default=':')                      
+parser.add_argument('-d', type=str, help="variant indentifier delimiter, used to separate sequence ID from rest ", dest='target_delim', default=':')
 try:
-        my_args = parser.parse_args()  
+        my_args = parser.parse_args()
 except SystemExit:
         print("\nOops, an argument is missing/invalid, exiting...\n")
         sys.exit(0)
@@ -96,7 +96,7 @@ if my_args.run_uMelt:
 targets=my_args.target_file.readlines()
 my_args.target_file.close()
 ##and create a hit list of sequences from this
-target_seq_id_list = [re.split(my_args.target_delim,X)[0] for X in targets] ## target_delimiter defaults to ':'  e.g. ABC:SNP:SAMTOOL:1234 
+target_seq_id_list = [re.split(my_args.target_delim,X)[0] for X in targets] ## target_delimiter defaults to ':'  e.g. ABC:SNP:SAMTOOL:1234
 
 ##print header
 print "SNP_Target_ID", "Position","Ref_base","Variant_base" ,"Amplicon_bp","PRIMER_LEFT_SEQUENCE",'PRIMER_RIGHT_SEQUENCE', "ref_melt_Tm","var_melt_Tm","Tm_difference"
@@ -110,9 +110,9 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
         limit_info = dict(gff_id = [ myrec.id ])
         ##rewind gff filehandle
         my_args.gff_file.seek(0)
-        ##read annotations into sequence dictionary for this sequence record only 
+        ##read annotations into sequence dictionary for this sequence record only
         annotations = [r for r in GFF.parse(my_args.gff_file, base_dict=seq_dict,limit_info=limit_info)]
-        ##if there are any annotations, then  proceed. 
+        ##if there are any annotations, then  proceed.
         if annotations:
             rec=annotations[0]
             ##iterate over list of target IDs
@@ -124,10 +124,10 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
                     #just consider slice of sequence in a window of +/- prod_max_size  bp
                     ##from feature UNLESS feature is close to end
                     ##Note that slice is zero-based
-                    featLocation = mytarget.location.start.position 
+                    featLocation = mytarget.location.start.position
                     if featLocation > my_args.prod_max_size:
                         slice_start = featLocation -  my_args.prod_max_size
-                        featPosition =  my_args.prod_max_size  
+                        featPosition =  my_args.prod_max_size
                     else:
                         slice_start = 0
                         featPosition = featLocation
@@ -143,7 +143,7 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
                         my_target_dict={} # re-initialize target dictionary
                         if target_feat.location.start.position == 0:
                             target_feat.location.start.position = 1
-                        #get the mask features by removing  target...all features are masked as just using snp and indels, a smarter filter could be added 
+                        #get the mask features by removing  target...all features are masked as just using snp and indels, a smarter filter could be added
 			exclude_feat = list(targetRec.features) ##list copy to avoid possible side-effects
                         exclude_feat.remove(target_feat)
 			excludes_str=' '.join([str(x.location.start.position)+','+str(x.location.end.position -x.location.start.position) for x in exclude_feat])
@@ -169,7 +169,10 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
 					ref_melt_Tm="NA" ##preferably something more informative?
 					var_melt_Tm="NA" ##exception handling to be added
                                         diff_melt="NA"
-                                reference_seq=target_feat.qualifiers['Reference_seq'][0]
+                                if target_feat.qualifiers.has_key('Reference_seq'):
+                                    reference_seq=target_feat.qualifiers['Reference_seq'][0]
+                                else:
+                                    reference_seq="NA"
                                 if target_feat.qualifiers.has_key('Variant_seq'):
                                     variant_seq=target_feat.qualifiers['Variant_seq'][0]
                                 else:
@@ -178,4 +181,3 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
 
 my_args.gff_file.close()
 my_args.in_file.close()
-
