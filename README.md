@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/cfljam/galaxy-pcr-markers.png?label=ready&title=Ready)](https://waffle.io/cfljam/galaxy-pcr-markers)
 galaxy-pcr-markers
 ==================
 
