@@ -93,7 +93,7 @@ if my_args.run_uMelt:
 
 #open input files
 
-targets=my_args.target_file.readlines()
+targets=[line.rstrip() for line in my_args.target_file.readlines()]
 my_args.target_file.close()
 ##and create a hit list of sequences from this
 target_seq_id_list = [re.split(my_args.target_delim,X)[0] for X in targets] ## target_delimiter defaults to ':'  e.g. ABC:SNP:SAMTOOL:1234 
