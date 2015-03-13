@@ -148,7 +148,7 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
                         exclude_feat.remove(target_feat)
 			excludes_str=' '.join([str(x.location.start.position)+','+str(x.location.end.position -x.location.start.position) for x in exclude_feat])
                         my_target_dict={'SEQUENCE_ID' : rec.name,\
-                         'SEQUENCE_TEMPLATE': targetRec.seq.tostring(),\
+                         'SEQUENCE_TEMPLATE': targetRec.seq.tostring().upper(),\
                          'SEQUENCE_TARGET': str(target_feat.location.start.position) + ',1',\
                          'SEQUENCE_EXCLUDED_REGION': excludes_str}
                         my_target_dict.update(def_dict) ##add in defaults
@@ -177,7 +177,9 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
                                     variant_seq=target_feat.qualifiers['Variant_seq'][0]
                                 else:
                                     variant_seq="NA"
-                                print mytarget.id, featLocation + 1 ,reference_seq, variant_seq,amp_end-amp_start,primerset['PRIMER_LEFT_SEQUENCE'],primerset['PRIMER_RIGHT_SEQUENCE'], ref_melt_Tm,var_melt_Tm,diff_melt#, amp_seq.tostring()[amp_start:amp_end+1], mutamp_seq.tostring()[amp_start:amp_end+1]
+                                print mytarget.id, featLocation + 1 ,reference_seq, variant_seq,\
+                                amp_end-amp_start,primerset['PRIMER_LEFT_SEQUENCE'],\
+                                primerset['PRIMER_RIGHT_SEQUENCE'], ref_melt_Tm,var_melt_Tm,diff_melt#, amp_seq.tostring()[amp_start:amp_end+1], mutamp_seq.tostring()[amp_start:amp_end+1]
 
 my_args.gff_file.close()
 my_args.in_file.close()
