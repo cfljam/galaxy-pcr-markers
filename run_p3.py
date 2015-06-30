@@ -1,4 +1,4 @@
-#!/usr/bin/pyrthon
+#!/usr/bin/python
 ##run primer3 by passing Python dictionary
 
 #un_P3.py
