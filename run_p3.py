@@ -6,7 +6,7 @@
 import subprocess as sp
 import copy
 
-
+### This was added in to allow usage with Python 2.6 and may be causing issues..
 if "check_output" not in dir(sp): # duck punch it in!
     def f(*popenargs, **kwargs):
         if 'stdout' in kwargs:
