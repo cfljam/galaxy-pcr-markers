@@ -172,7 +172,10 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
 					ref_melt_Tm="NA" ##preferably something more informative?
 					var_melt_Tm="NA" ##exception handling to be added
                                         diff_melt="NA"
-                                reference_seq=target_feat.qualifiers['Reference_seq'][0]
+                                if target_feat.qualifiers.has_key('Reference_seq'):
+                                    reference_seq=target_feat.qualifiers['Reference_seq'][0]
+                                else:
+                                    reference_seq="NA"
                                 if target_feat.qualifiers.has_key('Variant_seq'):
                                     variant_seq=target_feat.qualifiers['Variant_seq'][0]
                                 else:
