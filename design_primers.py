@@ -36,9 +36,9 @@ import argparse
 
 ##Primer3 defaults or additional options defined as dictionary
 def_dict={
-'PRIMER_MIN_SIZE':'18',
-'PRIMER_MAX_SIZE':'25',
-'PRIMER_MAX_NS_ACCEPTED':'1'}
+'PRIMER_MIN_SIZE':18 ,
+'PRIMER_MAX_SIZE':25,
+'PRIMER_MAX_NS_ACCEPTED':1}
 
 #parse arguments
 parser = argparse.ArgumentParser(description='Primer set design and melt prediction parameters')
@@ -70,20 +70,20 @@ except SystemExit:
         sys.exit(0)
 
 ##update from args. NEEDS TO BE FINISHED
-productsizerange = str(my_args.prod_min_size) + "-" + str(my_args.prod_max_size)
+productsizerange = [my_args.prod_min_size,my_args.prod_max_size]
 def_dict['PRIMER_PRODUCT_SIZE_RANGE']=productsizerange
-def_dict['PRIMER_NUM_RETURN']=str(my_args.max_primers +1)
-def_dict['PRIMER_OPT_SIZE']=str(my_args.opt_primer_length)
-def_dict['PRIMER_PAIR_MAX_DIFF_TM']=str(my_args.max_tm_diff)
-def_dict['PRIMER_OPT_TM']=str(my_args.optimum_tm)
-def_dict['PRIMER_OPT_GC_PERCENT']=str(my_args.opt_GC_percent)
-def_dict['PRIMER_MAX_POLY_X']=str(my_args.maxpolyx)
-def_dict['PRIMER_GC_CLAMP']=str(my_args.gc_clamp)
+def_dict['PRIMER_NUM_RETURN']=my_args.max_primers +1
+def_dict['PRIMER_OPT_SIZE']=my_args.opt_primer_length
+def_dict['PRIMER_PAIR_MAX_DIFF_TM']=my_args.max_tm_diff
+def_dict['PRIMER_OPT_TM']=my_args.optimum_tm
+def_dict['PRIMER_OPT_GC_PERCENT']=my_args.opt_GC_percent
+def_dict['PRIMER_MAX_POLY_X']= my_args.maxpolyx
+def_dict['PRIMER_GC_CLAMP']=my_args.gc_clamp
 
-def_dict['PRIMER_MAX_SELF_END']=str(my_args.maxselfend)
-def_dict['PRIMER_MAX_SELF_ANY']=str(my_args.maxselfany)
-def_dict['PRIMER_MAX_GC']=str(my_args.maxgc)
-def_dict['PRIMER_MIN_GC']=str(my_args.mingc)
+def_dict['PRIMER_MAX_SELF_END']=my_args.maxselfend
+def_dict['PRIMER_MAX_SELF_ANY']=my_args.maxselfany
+def_dict['PRIMER_MAX_GC']=my_args.maxgc
+def_dict['PRIMER_MIN_GC']=my_args.mingc
 
 
 
@@ -146,20 +146,20 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
                         #get the mask features by removing  target...all features are masked as just using snp and indels, a smarter filter could be added
 			exclude_feat = list(targetRec.features) ##list copy to avoid possible side-effects
                         exclude_feat.remove(target_feat)
-			excludes_str=' '.join([str(x.location.start.position)+','+str(x.location.end.position -x.location.start.position) for x in exclude_feat])
+			#excludes_str=' '.join([str(x.location.start.position)+','+str(x.location.end.position -x.location.start.position) for x in exclude_feat])
                         my_target_dict={'SEQUENCE_ID' : rec.name,\
                          'SEQUENCE_TEMPLATE': targetRec.seq.tostring().upper(),\
-                         'SEQUENCE_TARGET': str(target_feat.location.start.position) + ',1',\
-                         'SEQUENCE_EXCLUDED_REGION': excludes_str}
-                        my_target_dict.update(def_dict) ##add in defaults
-			result=P3.run_P3(target_dict=my_target_dict)
+                         'SEQUENCE_TARGET': [target_feat.location.start.position,1],\
+                         'SEQUENCE_EXCLUDED_REGION': [[x.location.start.position,x.location.end.position -x.location.start.position] for x in exclude_feat]}
+                        #my_target_dict.update(def_dict) ##add in defaults
+			result=P3.run_P3(target_dict=my_target_dict,global_dict=def_dict)
                         if my_args.run_uMelt:
                             amp_seq=targetRec.seq ##need to make this conditional on getting a result >0 and melt=True
                             mutamp_seq=targetRec.seq.tomutable()
                             mutamp_seq[target_feat.location.start:target_feat.location.end]=target_feat.qualifiers['Variant_seq'][0] #mutate to variant
 			for primerset in result:
-				amp_start=int(primerset['PRIMER_LEFT'].split(',')[0])
-				amp_end=int(primerset['PRIMER_RIGHT'].split(',')[0])
+				amp_start=int(primerset['PRIMER_LEFT'][0])
+				amp_end=int(primerset['PRIMER_RIGHT'][0])
                                 ref_melt_Tm=0
                                 var_melt_Tm=0
                                 diff_melt=0
