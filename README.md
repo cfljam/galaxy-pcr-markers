@@ -11,6 +11,16 @@ hg clone http://toolshed.g2.bx.psu.edu/repos/john-mccallum/pcr_markers.
 
 The primer design tool *design_primers.py*  now uses the excellent [primer3-py](https://github.com/benpruitt/primer3-py) See  http://benpruitt.github.io/primer3-py/index.html
 
+Python Dependencies
+------------
+
+- Python 2.7
+- BioPython see https://pypi.python.org/pypi/biopython
+- [BcBio-gff](https://github.com/chapmanb/bcbb/tree/master/gff)
+- [Primer3-py](https://github.com/benpruitt/primer3-py)
+```
+pip install bcbio-gff primer3-py
+```
 
 
 **CITATION**
