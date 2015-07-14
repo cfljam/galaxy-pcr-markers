@@ -21,12 +21,7 @@ Dependencies
 ```
 pip install bcbio-gff primer3-py
 ```
-- Primer3 >= 2.3.6 http://primer3.sourceforge.net/releases.php. After installation
-test it as follows:
-```
-cd test-data/
-primer3_core < primer3_test.txt 
-```
+N.B. Primer3 install is **NOT** required now since design is handled by *primer3-py*
 
 
 **CITATION**
