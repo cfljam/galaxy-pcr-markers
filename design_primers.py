@@ -146,13 +146,11 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
                         #get the mask features by removing  target...all features are masked as just using snp and indels, a smarter filter could be added
 			exclude_feat = list(targetRec.features) ##list copy to avoid possible side-effects
                         exclude_feat.remove(target_feat)
-			#excludes_str=' '.join([str(x.location.start.position)+','+str(x.location.end.position -x.location.start.position) for x in exclude_feat])
                         my_target_dict={'SEQUENCE_ID' : rec.name,\
                          'SEQUENCE_TEMPLATE': targetRec.seq.tostring().upper(),\
                          'SEQUENCE_TARGET': [target_feat.location.start.position,1],\
                          'SEQUENCE_EXCLUDED_REGION': [[x.location.start.position,x.location.end.position -x.location.start.position] for x in exclude_feat]}
-                        #my_target_dict.update(def_dict) ##add in defaults
-			result=P3.run_P3(target_dict=my_target_dict,global_dict=def_dict)
+ 			result=P3.run_P3(target_dict=my_target_dict,global_dict=def_dict)
                         if my_args.run_uMelt:
                             amp_seq=targetRec.seq ##need to make this conditional on getting a result >0 and melt=True
                             mutamp_seq=targetRec.seq.tomutable()
