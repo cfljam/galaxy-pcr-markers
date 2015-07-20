@@ -1,6 +1,6 @@
 #!/usr/bin/python2.6
 ##find snps that condition CAPS
-##usage  find_CAPS.py [-h] -i <reference file>  -g <gff file>
+##usage  find_CAPS.py [-h] -i <reference file>  -g <gff file> -o <output file>
 
 
 #Copyright 2012 John McCallum & Leshi Chen
