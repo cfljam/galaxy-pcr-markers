@@ -157,6 +157,10 @@ for myrec in SeqIO.parse(my_args.in_file, "fasta"):
                             amp_seq=targetRec.seq ##need to make this conditional on getting a result >0 and melt=True
                             mutamp_seq=targetRec.seq.tomutable()
                             mutamp_seq[target_feat.location.start:target_feat.location.end]=target_feat.qualifiers['Variant_seq'][0] #mutate to variant
+                            other_SNP=[f for f in targetRec.features if f.id != mytarget.id]
+                            if other_SNP:
+                                for snp in other_SNP:
+                                    mutamp_seq[snp.location.start:snp.location.end]=snp.qualifiers['Variant_seq'][0]
 			for primerset in result:
 				amp_start=int(primerset['PRIMER_LEFT'][0])
 				amp_end=int(primerset['PRIMER_RIGHT'][0])
