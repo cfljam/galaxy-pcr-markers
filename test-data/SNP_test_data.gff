@@ -1,0 +1,6 @@
+morex_contig_1425277	GBS	SNP	194	194	.	+	.	ID=morex_contig_1425277:194;Variant_seq=C;Reference_seq=T;
+morex_contig_1425277	GBS	SNP	207	207	.	+	.	ID=morex_contig_1425277:207;Variant_seq=T;Reference_seq=G;
+morex_contig_272649	GBS	SNP	3345	3345	.	+	.	ID=morex_contig_272649:3345;Variant_seq=G;Reference_seq=A;
+morex_contig_272649	GBS	SNP	3335	3335	.	+	.	ID=morex_contig_272649:3335;Variant_seq=C;Reference_seq=T;
+morex_contig_272649	GBS	SNP	6043	6043	.	+	.	ID=morex_contig_272649:6043;Variant_seq=T;Reference_seq=C;
+morex_contig_272649	GBS	SNP	6032	6032	.	+	.	ID=morex_contig_272649:6032;Variant_seq=G;Reference_seq=A;
