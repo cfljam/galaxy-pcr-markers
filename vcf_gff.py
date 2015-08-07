@@ -46,6 +46,8 @@ def get_info(attribute_input):
         record_type = "SNP"
     for entry in rec:
         detail = entry.split("=")
+        if len(detail) < 2:
+            continue
         INFO[detail[0]] = detail[1]
     if INFO.has_key("DP"):
         reads = INFO.get("DP")
@@ -86,9 +88,11 @@ def get_gen(formatcols, ref):
                 gen = "HET"
             if genotypes == "0/0":
                 gen = "HOM_ref"
-        else:
+        try: # set gen to 'NA' if still unset
+            gen
+        except NameError:
             gen = "NA"
-        geno = ("%s:%s;" % (reads, gen))
+        geno = ("%s:%s " % (reads, gen))
         genos += geno
         sample_dict = {}
     return genos
@@ -98,6 +102,7 @@ attributes = {}
 Get relevant info from vcf file and put to proper gff columns
 """
 
+out_gff_file.write("#gff-version 3\n")
 for line in in_vcf_file:
     if line.startswith("#") == False:
         info = line.split()
@@ -118,11 +123,11 @@ for line in in_vcf_file:
             end = start 
         gen = get_gen(info[8:], reference)
         out_gff_file.write(
-            ("%s\t%s\t%s\t%d\t%d\t%s\t%s\t%s\tID=%s:%s:%d;Variant" +
-             "_seq=%s;Reference_seq=%s;Total_reads=%s:Zygosity=%s\n") %
+            ("%s\t%s\t%s\t%d\t%d\t%s\t%s\t%s\tID=%s:%s:%s:%d;Variant" +
+             "_seq=%s;Reference_seq=%s;Total_reads=%s;Zygosity=%s\n") %
             ( seqid, source,record_type, start, end, score, strand, phase,seqid, 
-              record_type, start, variant, reference, reads, gen))
-    
+              source, record_type, start, variant, reference, reads, gen))
+
 out_gff_file.close()    
 
 

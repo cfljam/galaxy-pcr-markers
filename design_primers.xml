@@ -1,23 +1,38 @@
 <?xml version="1.0"?>
 <tool id="Genetic_Marker_Design_2" name="Design primers to features">
   <description>Design PCR Primers to Features</description>
-  <command interpreter="python">design_primers.py $inputfastaFile $inputSNPfile $inputTargetfile $min_size $max_size >  $primer_outputfile  </command>
+ <command interpreter="python -W ignore">
+      #if 'Yes' in $uMelt.value
+          design_primers.py -i $inputfastaFile -g $inputSNPfile -T $inputTargetfile -p $min_size -P $max_size -u >  $primer_outputfile
+      #else
+          design_primers.py -i $inputfastaFile -g $inputSNPfile -T $inputTargetfile -p $min_size -P $max_size  >  $primer_outputfile  
+      #end if
+       </command>
+
   <inputs>
     <param format="fasta" name="inputfastaFile" type="data" label="Multifasta Source file" />
     <param format="gff3" name="inputSNPfile" type="data" label="annotation file(Gff3)" />
     <param format="txt" name="inputTargetfile" type="data" optional="false" label="Target file" help="IN FORMAT Sequence id:source:type:start e.g. 1174806:gsMapper:SNP:292" ></param>
 <param name="min_size" size="20" type="text" value="75" label="Minimum Product Size Range" />
      <param name="max_size" size="20" type="text" value="100" label="Maximum Product Size Range" />
-  </inputs>
+ <param name="uMelt"  type="select"  label="uMelt prediction for HRM">
+            <option value="No" selected= "true">No</option>
+            <option value="Yes">Yes</option>
+         </param>
+ </inputs>
   <outputs>
      <data format="tabular"  name="primer_outputfile" />
   </outputs>
+  <stdio>
+        <exit_code range="1:" level="fatal" description="Fatal Error" />
+  </stdio>
 <help>
 .. class:: infomark
 
 **TIP**
 
 This tool designs primer pairs to flank features
+Optionally it can predict reference and variant Tm using the uMelt web service provided by University of Utah
 
 It takes 
 

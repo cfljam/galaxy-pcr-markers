@@ -12,12 +12,13 @@
 <help>
 This tool provides a simple conversion from vcf to gvf.
 
-It is intended for use with mpileup output where -g or -u flags are NOT used.
+It is intended for use with Freebayes or with Samtools mpileup 
 
 Be sure to read the documentation to determine if it meets your requirements.
 
 * vcf documentation at http://samtools.sourceforge.net/samtools.shtml#6
 * GVF/GFF3 at http://www.sequenceontology.org/resources/gvf.html
+* Freebayes https://github.com/ekg/freebayes
 
 
 

@@ -1,6 +1,6 @@
 #!/usr/bin/python2.6
 ##find snps that condition CAPS
-##usage  find_CAPS.py <reference file>  <gff file>
+##usage  find_CAPS.py [-h] -i <reference file>  -g <gff file> -o <output file>
 
 
 #Copyright 2012 John McCallum & Leshi Chen
@@ -21,21 +21,34 @@
 
 
 import sys
-
 from Bio import SeqIO
 from BCBio import GFF
 from Bio.Restriction import *
+import argparse
 
 ###This list is limited to economical enzymes performing well in PCR buffer
 rest_batch = RestrictionBatch(
     [AluI, ApaI, BamHI, BbrPI, BfrI, ClaI, DdeI, DpnII, DraI, EcoRI,
      HaeIII, HindII, HinfI, HpaI, PvuII, RsaI, SacI, Sau3AI, SmaI, TaqI])
 
-in_file=sys.argv[1]
-gff_file=sys.argv[2]
+parser = argparse.ArgumentParser(description='Identify SNPs that condition restriction polymorphisms')
+parser.add_argument('-i', type=argparse.FileType('r'), help="input sequence file, required", dest='in_file', required=True)
+parser.add_argument('-g', type=argparse.FileType('r'), help="input gff file with SNP and indels, required", dest='gff_file', required=True)
+parser.add_argument('-o', type=argparse.FileType('w'), help="output file , optional", dest='caps_out_file', required=False)
 
-in_seq_handle = open(in_file)
-in_gff_handle=open(gff_file)
+try:
+    my_args = parser.parse_args()
+except SystemExit:
+    print("argument is missing or invalid, exiting...\n")
+    sys.exit(0)
+
+in_seq_handle = my_args.in_file
+in_gff_handle = my_args.gff_file
+if my_args.caps_out_file != None:
+    out_file_handle = my_args.caps_out_file
+else:
+    out_file_handle = sys.stdout
+
 
 ##use iterator
 for myrec in SeqIO.parse(in_seq_handle, "fasta"):
@@ -81,13 +94,15 @@ for myrec in SeqIO.parse(in_seq_handle, "fasta"):
                     outputstr=[rec.id, fstart +1,fend+1,feat.id,enz]
                     if len(kr) > len(km):
                         outputstr.append("reference")
-                        print('\t'.join(map(str,outputstr)))
+                        #print('\t'.join(map(str,outputstr)))
+			out_file_handle.write('\t'.join(str(x) for x in outputstr)+'\n')
                     elif len(kr) < len(km):
                         outputstr.append("variant")
-                        print('\t'.join(map(str,outputstr)))
+                        #print('\t'.join(map(str,outputstr)))
+			out_file_handle.write('\t'.join(str(x) for x in outputstr)+'\n')
 
 in_gff_handle.close()
 in_seq_handle.close()                                                                              
-
+out_file_handle.close()
 
 

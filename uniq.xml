@@ -8,5 +8,3 @@
   <outputs>
      <data format="txt"  name="outputfile" />
   </outputs>
-
-</tool>
