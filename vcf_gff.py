@@ -77,31 +77,9 @@ def get_gen(formatcols, ref):
             reads = sample_dict.get("DP")
         else:
             reads = "NA"
-        if sample_dict.has_key("NF"):
+        if sample_dict.has_key("GT"):
             """
-            polysnp tool output
-            """
-            freq = sample_dict.get("NF")
-            variants = freq.split("|")
-            if int(variants[0]) >= 1:
-                var += "A"
-            if int(variants[1]) >= 1:
-                var += "C"
-            if int(variants[2]) >= 1:
-                var += "G"
-            if int(variants[3]) >= 1:
-                var += "T"
-            if var == "":
-                gen = "NA"
-            elif var == ref:
-                gen = "HOM_ref"
-            elif len(var) >= 2:
-                    gen = "HET"
-            else:
-                gen = "HOM_mut"
-        elif sample_dict.has_key("GT"):
-            """
-            mpileup output, recommend ALWAYS have GT, note this only good scoring for diploids too!
+            mpileup output, recommend ALWAYS have GT, note this only good for scoring diploids too!
             """
             genotypes = sample_dict.get("GT")
             if genotypes == "1/1":
