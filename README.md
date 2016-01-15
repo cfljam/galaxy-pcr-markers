@@ -4,10 +4,7 @@ galaxy-pcr-markers
 
 Scripts for design of PCR-based Marker Assays from DNA sequence variant data and optimised design of high-resolution melting PCR assays using the uMelt web service provided by the Wittwer Lab at University of Utah https://www.dna.utah.edu/umelt/umelt.html
 
-Xml wrappers are included for use in the  Galaxy  workflow environment.
-Also available for download at Galaxy Toolshed http://toolshed.g2.bx.psu.edu/
-hg clone http://toolshed.g2.bx.psu.edu/repos/john-mccallum/pcr_markers.
-(These are now (2015) quite old and we plan to replace these with containerized verisons using Docker.)
+This branch does not contain legacy Galaxy components and is intended for use at command-line or in Jupyter notebooks
 
 The primer design tool *design_primers.py*  now uses the excellent [primer3-py](https://github.com/benpruitt/primer3-py) See  http://benpruitt.github.io/primer3-py/index.html
 
