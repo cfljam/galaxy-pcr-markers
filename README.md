@@ -7,18 +7,32 @@ Scripts for design of PCR-based Marker Assays from DNA sequence variant data and
 Xml wrappers are included for use in the  Galaxy  workflow environment.
 Also available for download at Galaxy Toolshed http://toolshed.g2.bx.psu.edu/
 hg clone http://toolshed.g2.bx.psu.edu/repos/john-mccallum/pcr_markers.
-(These are now (2015) quite old and we plan to replace these with containerized verisons using Docker.)
 
 The primer design tool *design_primers.py*  now uses the excellent [primer3-py](https://github.com/benpruitt/primer3-py) See  http://benpruitt.github.io/primer3-py/index.html
 
 Dependencies
 ------------
-- Linux or OSX - not tested on Windows (use Docker or VM)
+- Linux or OSX - not tested on Windows 
 - Python 2.7
+- NumPy
 - BioPython see https://pypi.python.org/pypi/biopython
 - [BcBio-gff](https://github.com/chapmanb/bcbb/tree/master/gff)
 - [Primer3-py](https://github.com/benpruitt/primer3-py)
+
+We recommend running inside a Conda environment
+
+- install [Miniconda]()
+- create a fresh environment and activate it
+
 ```
+conda create -y -n Py2PCR python=2.7
+source activate Py2PCR
+```
+Install the dependencies using pip
+
+```
+pip install numpy
+pip install biopython
 pip install bcbio-gff primer3-py
 ```
 N.B. Primer3 install is **NOT** required now since design is handled by *primer3-py*
