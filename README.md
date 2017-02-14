@@ -21,7 +21,7 @@ Dependencies
 
 We recommend running inside a Conda environment
 
-- install [Miniconda]()
+- install [Miniconda](https://conda.io/docs/install/quick.html)
 - create a fresh environment and activate it
 
 ```
