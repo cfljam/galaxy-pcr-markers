@@ -7,7 +7,7 @@ Scripts for design of PCR-based Marker Assays from DNA sequence variant data and
 Xml wrappers for use in the  Galaxy  workflow environment are deprecated and not maintained. 
 See older versions 
 
-We are currently (2017)  refactoring to enable use with VCF and BED formats on genome-scale data.  
+We are currently (2017)  refactoring to enable use with VCF and BED formats on genome-scale data. See https://github.com/PlantandFoodResearch/pcr_marker_design  
 
 The primer design tool *design_primers.py*  now uses the excellent [primer3-py](https://github.com/benpruitt/primer3-py) See  http://benpruitt.github.io/primer3-py/index.html
 
